@@ -62,7 +62,7 @@ git push
 ```
 
 - GitHub raw 有缓存，推送后一般 1~5 分钟生效；jsDelivr 缓存更久，可加 `@main` 之外的 tag 或访问
-  `https://purge.jsdelivr.net/gh/<owner>/<repo>@main/bilinovel.json` 手动刷新。
+  `https://purge.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json` 手动刷新。
 - 书架里已导入的书源不会自动跟着仓库变，需要在书源管理里重新「网络导入」覆盖一次（同 `bookSourceUrl` 会覆盖）。
 
 ---
