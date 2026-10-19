@@ -1,10 +1,13 @@
 # Legado 书源仓库
 
-给「阅读 3.0（Legado）」用的书源集合，按站点分文件。每个文件都是**书源对象数组**，可以直接用 URL 网络导入。
+给「阅读 3.0（Legado）」用的书源集合。**一个站点一个文件**，每个文件都是书源对象数组，可以直接用 URL 网络导入；`all.json` 是所有书源的汇总，一次导入全部。
 
-| 文件 | 站点 | 说明 |
-|---|---|---|
-| [`bilinovel.json`](./bilinovel.json) | [哔哩轻小说](https://www.bilinovel.com/) | 搜索 / 发现（文库 14 分类 + 排行 + 完本）/ 详情 / 分卷目录 / 多页正文合并 |
+## 书源列表
+
+| 文件 | 书源 | 站点 | 说明 |
+|---|---|---|---|
+| [`bilinovel.json`](./bilinovel.json) | 哔哩轻小说 | [bilinovel.com](https://www.bilinovel.com/) | 搜索 / 发现（文库 14 分类 + 排行 + 完本）/ 详情 / 分卷目录 / 多页正文合并 |
+| [`all.json`](./all.json) | 全部 | — | 由 `tools/build.mjs` 自动生成，供一次性导入所有书源 |
 
 ---
 
@@ -16,23 +19,23 @@
 
 | 线路 | 地址 | 备注 |
 |---|---|---|
-| jsDelivr | `https://cdn.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json` | 国内一般可用，**推荐** |
-| jsDelivr(Fastly) | `https://fastly.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json` | 备用线路 |
-| GitHub raw | `https://raw.githubusercontent.com/suwa-ko/legado-sources/main/bilinovel.json` | 国内可能被墙 |
-| gh 代理 | `https://ghproxy.net/https://raw.githubusercontent.com/suwa-ko/legado-sources/main/bilinovel.json` | raw 打不开时用 |
+| jsDelivr | `https://cdn.jsdelivr.net/gh/suwa-ko/legado-sources@main/all.json` | 国内一般可用，**推荐**（`all.json` 换成 `bilinovel.json` 即只导入单个书源） |
+| jsDelivr(Fastly) | `https://fastly.jsdelivr.net/gh/suwa-ko/legado-sources@main/all.json` | 备用线路 |
+| GitHub raw | `https://raw.githubusercontent.com/suwa-ko/legado-sources/main/all.json` | 国内可能被墙 |
+| gh 代理 | `https://ghproxy.net/https://raw.githubusercontent.com/suwa-ko/legado-sources/main/all.json` | raw 打不开时用 |
 
 > 仓库必须是 **public**，私有仓库的 raw 地址需要 token，阅读拿不到。
 
 ### 方式 B：本地导入
 
-下载 [`bilinovel.json`](./bilinovel.json)，在书源管理 → 本地导入里选择该文件。
+下载 [`bilinovel.json`](./bilinovel.json) 或 [`all.json`](./all.json)，在书源管理 → 本地导入里选择该文件。
 
 ### 方式 C：一键深链（手机上点开即唤起阅读）
 
 在手机浏览器打开（或做成网页按钮）：
 
 ```
-legado://import/bookSource?src=https%3A%2F%2Fraw.githubusercontent.com%2Fsuwa-ko%2Flegado-sources%2Fmain%2Fbilinovel.json
+legado://import/bookSource?src=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fsuwa-ko%2Flegado-sources%40main%2Fall.json
 ```
 
 `src` 的值就是方式 A 的地址做 URL 编码。不同版本的阅读对深链支持略有差异，失败就用方式 A。
@@ -50,24 +53,52 @@ legado://import/bookSource?src=https%3A%2F%2Fraw.githubusercontent.com%2Fsuwa-ko
 
 ---
 
-## 三、更新与维护
+## 三、新增 / 更新书源
 
-书源改动后：
+结构就是给后来源准备的，加站点不需要改代码：
 
 ```bash
-# 改完 bilinovel.json（务必保持 JSON 合法、顶层是数组）
-git add .
-git commit -m "update bilinovel source"
-git push
+cp docs/book-source-template.json mysite.json   # 文件名 = 站点标识
+# 改 bookSourceUrl / bookSourceName + 四组规则
+node tools/build.mjs                            # 校验并重新生成 all.json
+git add -A && git commit -m "add mysite" && git push
 ```
 
-- GitHub raw 有缓存，推送后一般 1~5 分钟生效；jsDelivr 缓存更久，可加 `@main` 之外的 tag 或访问
-  `https://purge.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json` 手动刷新。
-- 书架里已导入的书源不会自动跟着仓库变，需要在书源管理里重新「网络导入」覆盖一次（同 `bookSourceUrl` 会覆盖）。
+`tools/build.mjs` 会校验：JSON 合法性、顶层是否为数组、`bookSourceName`/`bookSourceUrl` 是否缺失、`bookSourceUrl` 是否重复（重复会在阅读里互相覆盖），并重新生成 `all.json`。
+
+规则写法速查、分卷/多页正文/反爬握手这些套路、调试排查顺序，都在 **[docs/add-a-source.md](./docs/add-a-source.md)**；空模板在 [`docs/book-source-template.json`](./docs/book-source-template.json)。
+
+### 更新已有书源
+
+```bash
+# 改完对应文件（务必保持 JSON 合法、顶层是数组）
+node tools/build.mjs
+git add -A && git commit -m "update mysite source" && git push
+```
+
+- GitHub raw 有缓存，推送后一般 1~5 分钟生效；jsDelivr 缓存更久，可访问
+  `https://purge.jsdelivr.net/gh/suwa-ko/legado-sources@main/all.json` 手动刷新。
+- 阅读里已导入的书源不会自动跟着仓库变，需要在书源管理里重新「网络导入」覆盖一次（同 `bookSourceUrl` 会覆盖）。
 
 ---
 
-## 四、免责声明
+## 四、目录结构
+
+```
+.
+├── all.json                      # 汇总（自动生成，勿手改）
+├── bilinovel.json                # 哔哩轻小说
+├── bilinovel-notes.md            # 该书源的原理与已知限制
+├── docs/
+│   ├── add-a-source.md           # 新增/更新书源指南（规则速查）
+│   └── book-source-template.json # 书源模板
+├── tools/
+│   └── build.mjs                 # 合并 + 校验脚本（无依赖）
+└── .gitignore
+```
+
+---
+
+## 五、免责声明
 
 本仓库**只包含解析规则**，不存储、不转载任何小说正文；所有内容版权归原站点与原作者所有。书源仅供个人学习与技术研究，请勿用于商业用途，并遵守目标站点的服务条款。站点改版或封禁导致失效属正常情况。
-

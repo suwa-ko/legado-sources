@@ -1,0 +1,81 @@
+[
+  {
+    "bookSourceComment": "哔哩轻小说（bilinovel.com）轻小说书源：搜索 / 发现（文库分类·排行·完本）/ 详情 / 分卷目录 / 多页正文合并。\n站点搜索要先做 search_guard 握手，已由 searchUrl 里的 JS 自动完成，请保持“启用 Cookie”为开。\n注意：站点会对非浏览器客户端截断正文（末尾出现“（內容加載失敗…）”），App 走手机网络一般正常；若仍截断，可把目录的章节链接规则临时改成 a@href,{\"webView\":true} 试试（会变慢）。\n备用域名：https://www.bilinovel.net / https://www.linovelib.com ，改 bookSourceUrl 即可，搜索会跟随域名。",
+    "bookSourceGroup": "轻小说",
+    "bookSourceName": "哔哩轻小说",
+    "bookSourceType": 0,
+    "bookSourceUrl": "https://www.bilinovel.com",
+    "bookUrlPattern": "https?://(?:www\\.)?(?:bilinovel\\.(?:com|net)|linovelib\\.com)/novel/\\d+\\.html.*",
+    "concurrentRate": "1/1500",
+    "customOrder": 0,
+    "enabled": true,
+    "enabledCookieJar": true,
+    "enabledExplore": true,
+    "exploreUrl": "最新更新::https://www.bilinovel.com/wenku/lastupdate_0_0_0_0_0_0_0_{{page}}_0.html\n电击文库::https://www.bilinovel.com/wenku/dengekibunko/{{page}}.html\n富士见文库::https://www.bilinovel.com/wenku/fujimibunko/{{page}}.html\n角川文库::https://www.bilinovel.com/wenku/kadokawabunko/{{page}}.html\nMF文库J::https://www.bilinovel.com/wenku/emuefubunkojei/{{page}}.html\nFami通文库::https://www.bilinovel.com/wenku/famitsubunko/{{page}}.html\nGA文库::https://www.bilinovel.com/wenku/gagraphicbunko/{{page}}.html\nHJ文库::https://www.bilinovel.com/wenku/hobbyjapanbunko/{{page}}.html\n一迅社::https://www.bilinovel.com/wenku/ichijinsha/{{page}}.html\n集英社::https://www.bilinovel.com/wenku/shueisha/{{page}}.html\n小学馆::https://www.bilinovel.com/wenku/shogakukan/{{page}}.html\n讲谈社::https://www.bilinovel.com/wenku/kodansha/{{page}}.html\n少女文库::https://www.bilinovel.com/wenku/teenagebunko/{{page}}.html\n其他文库::https://www.bilinovel.com/wenku/other/{{page}}.html\n华文轻小说::https://www.bilinovel.com/wenku/chineselightnovel/{{page}}.html\n完本::https://www.bilinovel.com/topfull/postdate/{{page}}.html\n收藏榜::https://www.bilinovel.com/top/goodnum/{{page}}.html\n点击榜::https://www.bilinovel.com/top/monthvisit/{{page}}.html\n推荐榜::https://www.bilinovel.com/top/monthvote/{{page}}.html\n鲜花榜::https://www.bilinovel.com/top/monthflower/{{page}}.html\n新书榜::https://www.bilinovel.com/top/newhot/{{page}}.html",
+    "header": "{\"User-Agent\":\"Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36\",\"Accept-Language\":\"zh-CN,zh;q=0.9\"}",
+    "lastUpdateTime": 0,
+    "loginUrl": "",
+    "respondTime": 180000,
+    "ruleBookInfo": {
+      "init": "",
+      "name": "#bookDetailWrapper h1.book-title@text",
+      "author": ".book-rand-a .authorname@text",
+      "intro": "#bookSummary content@text",
+      "kind": ".tag-small-group@text",
+      "lastChapter": ".book-status .book-meta-r p@text",
+      "updateTime": ".book-status .book-meta-l@text##最后更新[·:：]?\\s*##",
+      "coverUrl": ".module-item-cover img.book-cover@src",
+      "tocUrl": "#btnReadBook@href",
+      "wordCount": "@js:var m = String(result).match(/([\\d.]+)\\s*万字/);\nm ? m[1] + '万字' : ''",
+      "canReName": "",
+      "downloadUrls": ""
+    },
+    "ruleContent": {
+      "content": "#acontent@html",
+      "nextContentUrl": "@js:var idM = String(result).match(/chapterid:'(\\d+)'/);\nvar nxM = String(result).match(/url_next:'([^']+)'/);\nvar out = '';\nif (idM && nxM) { var u = nxM[1]; if (u.indexOf('/' + idM[1] + '_') > -1) { out = u; } }\nout",
+      "webJs": "",
+      "sourceRegex": "",
+      "replaceRegex": "##[……\\s]*（內容加載失敗[^）]*）##",
+      "imageStyle": ""
+    },
+    "ruleExplore": {
+      "bookList": ".book-ol.book-ol-normal>li.book-li, ol.jsBooks>li.book-li",
+      "name": ".book-title@text",
+      "author": ".book-author@ownText",
+      "intro": ".book-desc@text||.book-intro@text",
+      "kind": ".book-meta-r@text",
+      "lastChapter": "",
+      "updateTime": "",
+      "bookUrl": "a.book-layout@href",
+      "coverUrl": ".book-cover img@data-src||.book-cover img@src",
+      "wordCount": ""
+    },
+    "ruleSearch": {
+      "bookList": ".book-ol.book-ol-normal>li.book-li, ol.jsBooks>li.book-li",
+      "name": ".book-title@text",
+      "author": ".book-author@ownText",
+      "intro": ".book-desc@text||.book-intro@text",
+      "kind": ".book-meta-r@text",
+      "lastChapter": "",
+      "updateTime": "",
+      "bookUrl": "a.book-layout@href",
+      "coverUrl": ".book-cover img@data-src||.book-cover img@src",
+      "wordCount": "",
+      "checkKeyWord": ""
+    },
+    "ruleToc": {
+      "preUpdateJs": "",
+      "chapterList": ".chapter-bar, .chapter-li.jsChapter",
+      "chapterName": "a@text",
+      "chapterUrl": "a@href",
+      "formatJs": "",
+      "isVolume": "tag.h3@text",
+      "isVip": "",
+      "isPay": "",
+      "updateTime": "",
+      "nextTocUrl": ""
+    },
+    "searchUrl": "@js:var base = 'https://www.bilinovel.com';\ntry { if (source && source.bookSourceUrl) { base = String(source.bookSourceUrl).replace(/\\/+$/, ''); } } catch (e) {}\nvar kw = '';\ntry { kw = encodeURIComponent(key); } catch (e) { kw = java.encodeURI(key); }\ntry {\n    java.ajax(base + '/search.html?search_guard=css');\n    var jsTxt = String(java.ajax(base + '/search.html?search_guard=js') || '');\n    var m = /jieqiSearchJs=[^;]+/.exec(jsTxt);\n    if (m) { cookie.replaceCookie(base + '/', m[0]); }\n    java.ajax(base + '/search.html?search_guard=redeem');\n} catch (e) {}\nbase + '/search/' + kw + '_' + page + '.html'",
+    "weight": 0
+  }
+]
