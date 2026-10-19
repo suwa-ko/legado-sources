@@ -15,16 +15,16 @@
 阅读 App → 我的 → 书源管理 → 右上角 `⋮` → **网络导入** → 粘贴下面任意一条：
 
 ```
-https://raw.githubusercontent.com/<owner>/<repo>/main/bilinovel.json
+https://raw.githubusercontent.com/suwa-ko/legado-sources/main/bilinovel.json
 ```
 
 国内访问 `raw.githubusercontent.com` 不稳定时，用 jsDelivr 镜像（内容相同）：
 
 ```
-https://cdn.jsdelivr.net/gh/<owner>/<repo>@main/bilinovel.json
+https://cdn.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json
 ```
 
-> 把 `<owner>` 和 `<repo>` 换成你的 GitHub 用户名和仓库名。仓库必须是 **public**，私有仓库的 raw 地址需要 token。
+> 仓库必须是 **public**，私有仓库的 raw 地址需要 token，阅读拿不到。
 
 ### 方式 B：本地导入
 
@@ -35,7 +35,7 @@ https://cdn.jsdelivr.net/gh/<owner>/<repo>@main/bilinovel.json
 在手机浏览器打开（或做成网页按钮）：
 
 ```
-legado://import/bookSource?src=https%3A%2F%2Fraw.githubusercontent.com%2F<owner>%2F<repo>%2Fmain%2Fbilinovel.json
+legado://import/bookSource?src=https%3A%2F%2Fraw.githubusercontent.com%2Fsuwa-ko%2Flegado-sources%2Fmain%2Fbilinovel.json
 ```
 
 `src` 的值就是方式 A 的地址做 URL 编码。不同版本的阅读对深链支持略有差异，失败就用方式 A。
