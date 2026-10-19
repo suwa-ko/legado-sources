@@ -12,17 +12,14 @@
 
 ### 方式 A：网络导入（推荐，以后换书源只改仓库文件）
 
-阅读 App → 我的 → 书源管理 → 右上角 `⋮` → **网络导入** → 粘贴下面任意一条：
+阅读 App → 我的 → 书源管理 → 右上角 `⋮` → **网络导入** → 粘贴下面任意一条（内容完全一致，只是走的线路不同）：
 
-```
-https://raw.githubusercontent.com/suwa-ko/legado-sources/main/bilinovel.json
-```
-
-国内访问 `raw.githubusercontent.com` 不稳定时，用 jsDelivr 镜像（内容相同）：
-
-```
-https://cdn.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json
-```
+| 线路 | 地址 | 备注 |
+|---|---|---|
+| jsDelivr | `https://cdn.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json` | 国内一般可用，**推荐** |
+| jsDelivr(Fastly) | `https://fastly.jsdelivr.net/gh/suwa-ko/legado-sources@main/bilinovel.json` | 备用线路 |
+| GitHub raw | `https://raw.githubusercontent.com/suwa-ko/legado-sources/main/bilinovel.json` | 国内可能被墙 |
+| gh 代理 | `https://ghproxy.net/https://raw.githubusercontent.com/suwa-ko/legado-sources/main/bilinovel.json` | raw 打不开时用 |
 
 > 仓库必须是 **public**，私有仓库的 raw 地址需要 token，阅读拿不到。
 
